@@ -1,0 +1,114 @@
+{Realice un programa en el que cuatro robots realizan las siguientes actividades:
+● El robot 1 debe limpiar de flores las primeras 15 esquinas de las calles 75 y 80. Al finalizar cada calle, debe depositar todas las flores en la última esquina.
+● El robot 2 debe limpiar de papeles las últimas 20 esquinas de las avenidas 75 y 80. Al finalizar cada avenida debe depositar todos los papeles en la primera esquina.
+● El robot 3 debe limpiar de flores las últimas 30 esquinas de las calles 10 y 15. Al finalizar cada calle, debe depositar todas las flores en la última esquina.
+● El robot 4 debe limpiar de papeles las primeras 10 esquinas de las avenidas 10 y 15. Al finalizar cada avenida debe depositar todos los papeles en la primera esquina.}
+
+programa ejemplo
+procesos
+  
+  proceso juntarFlores (ES cantFlores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      cantFlores:= cantFlores +1
+  fin
+  
+  proceso depositarFlores (E cantFlores: numero)
+  comenzar
+    repetir cantFlores
+      depositarFlor
+  fin
+  
+  proceso recorrerYLimpiarCalles (E cantEsq: numero)
+  variables
+    cantFlores: numero
+  comenzar
+    cantFlores:= 0
+    repetir cantEsq - 1
+      juntarFlores(cantFlores)
+      mover
+    juntarFlores(cantFlores)
+    depositarFlores(cantFlores)
+  fin
+ 
+  proceso juntarPapeles (ES cantPapeles: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      cantPapeles:= cantPapeles +1
+  fin
+   
+  proceso depositarPapeles (E priA: numero; E priC: numero; E cantPapeles: numero)
+  comenzar
+    Pos(priA, priC)
+    repetir cantPapeles
+      depositarPapel
+  fin
+  
+  proceso recorrerYLimpiarAvenidas (E cantEsq: numero)
+  variables
+    priA, priC, cantPapeles: numero
+  comenzar
+    priA:= PosAv
+    priC:= PosCa
+    cantPapeles:= 0
+    repetir cantEsq - 1 
+      juntarPapeles(cantPapeles)
+      mover
+    juntarPapeles(cantPapeles)
+    depositarPapeles(priA, priC, cantPapeles)
+  fin
+
+areas
+  ciudad1: AreaP (1,75,15,80)
+  ciudad2: AreaP (75,81,80,100)
+  ciudad3: AreaP (71,10,100,15)
+  ciudad4: AreaP (10,1,15,10)
+
+robots
+  robot robot1
+  comenzar
+    derecha
+    recorrerYLimpiarCalles(15)
+    Pos(1,80)
+    recorrerYLimpiarCalles(15)
+  fin
+  
+  robot robot2
+  comenzar
+    recorrerYLimpiarAvenidas(20)
+    Pos(80,81)
+    recorrerYLimpiarAvenidas(20)
+  fin
+  
+  robot robot3
+  comenzar
+    derecha
+    recorrerYLimpiarCalles(30)
+    Pos(71,15)
+    recorrerYLimpiarCalles(30)
+  fin
+  
+  robot robot4
+  comenzar
+    recorrerYLimpiarAvenidas(10)
+    Pos(15,1)
+    recorrerYLimpiarAvenidas(10)
+  fin
+
+variables
+  r1: robot1
+  r2: robot2
+  r3: robot3
+  r4: robot4
+comenzar
+  AsignarArea(r1, ciudad1)
+  AsignarArea(r2, ciudad2)
+  AsignarArea(r3, ciudad3)
+  AsignarArea(r4, ciudad4)
+  Iniciar(r1, 1,75)
+  Iniciar(r2, 75,81)
+  Iniciar(r3, 71,10)
+  Iniciar(r4, 10,1)
+fin
