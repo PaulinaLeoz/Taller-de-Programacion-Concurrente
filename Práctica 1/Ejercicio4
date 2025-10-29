@@ -1,4 +1,4 @@
-{CORREGIR, NO RECORRER LAS CALLES:). Realice un programa en el que dos robots se encargan de limpiar las ciudad. La ciudad se dividió
+{Realice un programa en el que dos robots se encargan de limpiar las ciudad. La ciudad se dividió
 en 4 áreas: las impares (1 y 3) deben limpiarse de flores; y las pares (2 y 4) deben limpiarse de
 papeles. Un robot debe encargarse de las áreas impares y otro robot de las pares. Modularice el
 recorrido de cada área
