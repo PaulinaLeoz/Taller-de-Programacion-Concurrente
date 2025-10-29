@@ -1,0 +1,132 @@
+{c. Modifique el ejercicio anterior para que ahora participen 6 robots
+○ Robot 1: Avenida 1, entre las calles 1 y 10
+○ Robot 2: Avenida 2, entre las calles 11 y 20
+○ Robot 3: Avenida 3, entre las calles 21 y 30
+○ Robot 4: Avenida 4, entre las calles 31 y 40
+○ Robot 5: Avenida 5, entre las calles 41 y 50
+○ Robot 6: Avenida 6, entre las calles 51 y 60
+○ Fiscalizador: Avenida 2, calle 1}
+programa ejercicio1_2
+procesos
+  proceso juntarFlores (ES cant: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      cant:= cant +1
+  fin
+  
+  proceso recorrerAvenida (ES cant: numero)
+  variables
+    i: numero
+  comenzar
+    repetir 9
+      juntarFlores (cant)
+      mover
+    juntarFlores (cant)
+  fin
+  
+  proceso ActualizarMax (E cant: numero; ES cantMaxFlores: numero)
+  comenzar
+    si (cant > cantMaxFlores)
+      cantMaxFlores:= cant
+  fin
+
+areas
+  ciudad1: AreaP (1,1,1,10)
+  ciudad2: AreaP (2,11,2,20)
+  ciudad3: AreaP (3,21,3,30)
+  ciudad4: AreaP (4,31,4,40)
+  ciudad5: AreaP (5,41,5,50)
+  ciudad6: AreaP (6,51,6,60)
+  ciudad7: AreaP (2,1,2,1)
+
+robots
+  robot robot1
+  variables
+    cant1: numero
+  comenzar
+    cant1:= 0
+    recorrerAvenida(cant1)
+    EnviarMensaje(cant1, r7)
+  fin
+  
+  robot robot2
+  variables
+    cant2: numero
+  comenzar
+    cant2:= 0
+    recorrerAvenida(cant2)
+    EnviarMensaje(cant2, r7)
+  fin
+  
+  robot robot3
+  variables
+    cant3: numero
+  comenzar
+    cant3:= 0
+    recorrerAvenida(cant3)
+    EnviarMensaje(cant3, r7)
+  fin
+  
+  robot robot4
+  variables
+    cant4: numero
+  comenzar
+    cant4:= 0
+    recorrerAvenida(cant4)
+    EnviarMensaje(cant4, r7)
+  fin
+  
+  robot robot5
+  variables
+    cant5: numero
+  comenzar
+    cant5:= 0
+    recorrerAvenida(cant5)
+    EnviarMensaje(cant5, r7)
+  fin
+  
+  robot robot6
+  variables
+    cant6: numero
+  comenzar
+    cant6:= 0
+    recorrerAvenida(cant6)
+    EnviarMensaje(cant6, r7)
+  fin
+
+  robot robot7
+  variables
+    cant, cantMaxFlores: numero
+  comenzar
+    cantMaxFlores:= -1
+    repetir 6
+      RecibirMensaje(cant, *)
+      ActualizarMax(cant, cantMaxFlores)
+    Informar(cantMaxFlores)
+  fin   
+
+variables
+  r1: robot1
+  r2: robot2
+  r3: robot3
+  r4: robot4
+  r5: robot5
+  r6: robot6
+  r7: robot7
+comenzar
+  AsignarArea(r1, ciudad1)
+  AsignarArea(r2, ciudad2)
+  AsignarArea(r3, ciudad3)
+  AsignarArea(r4, ciudad4)
+  AsignarArea(r5, ciudad5)
+  AsignarArea(r6, ciudad6)
+  AsignarArea(r7, ciudad7)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 2,11)
+  Iniciar(r3, 3,21)
+  Iniciar(r4, 4,31)
+  Iniciar(r5, 5,41)
+  Iniciar(r6, 6,51)
+  Iniciar(r7, 2,1)
+fin
