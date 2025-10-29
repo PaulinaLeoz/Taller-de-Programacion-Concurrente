@@ -1,0 +1,160 @@
+{d. Modifique el inciso anterior para que ahora el fiscalizador informe también, cuál fue el robot ganador.}
+programa ejercicio1_2
+procesos
+  proceso juntarFlores (ES cant: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      cant:= cant +1
+  fin
+  
+  proceso recorrerAvenida (ES cant: numero)
+  variables
+    i: numero
+  comenzar
+    repetir 9
+      juntarFlores (cant)
+      mover
+    juntarFlores (cant)
+  fin
+  
+  proceso ActualizarMax (E cant: numero; ES cantMaxFlores: numero; E quienEs: numero; ES quienEsMax: numero)
+  comenzar
+    si (cant > cantMaxFlores)
+      cantMaxFlores:= cant
+      quienEsMax:= quienEs
+  fin
+
+areas
+  ciudad1: AreaP (1,1,1,10)
+  ciudad2: AreaP (2,11,2,20)
+  ciudad3: AreaP (3,21,3,30)
+  ciudad4: AreaP (4,31,4,40)
+  ciudad5: AreaP (5,41,5,50)
+  ciudad6: AreaP (6,51,6,60)
+  ciudad7: AreaP (2,1,2,1)
+
+robots
+  robot robot1
+  variables
+    cant1, quienSoy: numero
+  comenzar
+    cant1:= 0
+    RecibirMensaje(quienSoy, r7)
+    recorrerAvenida(cant1)
+    EnviarMensaje(quienSoy, r7)
+    EnviarMensaje(cant1, r7)
+  fin
+  
+  robot robot2
+  variables
+    cant2, quienSoy: numero
+  comenzar
+    cant2:= 0
+    RecibirMensaje(quienSoy, r7)
+    recorrerAvenida(cant2)
+    EnviarMensaje(quienSoy, r7)
+    EnviarMensaje(cant2, r7)
+  fin
+  
+  robot robot3
+  variables
+    cant3, quienSoy: numero
+  comenzar
+    cant3:= 0
+    RecibirMensaje(quienSoy, r7)
+    recorrerAvenida(cant3)
+    EnviarMensaje(quienSoy, r7)
+    EnviarMensaje(cant3, r7)
+  fin
+  
+  robot robot4
+  variables
+    cant4, quienSoy: numero
+  comenzar
+    cant4:= 0
+    RecibirMensaje(quienSoy, r7)
+    recorrerAvenida(cant4)
+    EnviarMensaje(quienSoy, r7)
+    EnviarMensaje(cant4, r7)
+  fin
+  
+  robot robot5
+  variables
+    cant5, quienSoy: numero
+  comenzar
+    cant5:= 0
+    RecibirMensaje(quienSoy, r7)
+    recorrerAvenida(cant5)
+    EnviarMensaje(quienSoy, r7)
+    EnviarMensaje(cant5, r7)
+  fin
+  
+  robot robot6
+  variables
+    cant6, quienSoy: numero
+  comenzar
+    cant6:= 0
+    RecibirMensaje(quienSoy, r7)
+    recorrerAvenida(cant6)
+    EnviarMensaje(quienSoy, r7)
+    EnviarMensaje(cant6, r7)
+  fin
+
+  robot robot7
+  variables
+    cant, cantMaxFlores, quienEs, quienEsMax: numero
+  comenzar
+    cantMaxFlores:= -1
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    EnviarMensaje(4,r4)
+    EnviarMensaje(5,r5)
+    EnviarMensaje(6,r6)
+    repetir 6
+      RecibirMensaje(quienEs, *)
+      si (quienEs = 1)
+        RecibirMensaje(cant, r1)
+      sino
+        si (quienEs = 2)
+          RecibirMensaje(cant, r2)
+        sino
+          si (quienEs = 3)
+            RecibirMensaje(cant, r3)
+          sino
+            si (quienEs = 4)
+              RecibirMensaje(cant, r4)
+            sino
+              si (quienEs = 5)
+                RecibirMensaje(cant, r5)
+              sino
+                RecibirMensaje(cant, r6)
+      ActualizarMax(cant, cantMaxFlores, quienEs, quienEsMax)
+    Informar(cantMaxFlores, quienEsMax)
+  fin   
+
+variables
+  r1: robot1
+  r2: robot2
+  r3: robot3
+  r4: robot4
+  r5: robot5
+  r6: robot6
+  r7: robot7
+comenzar
+  AsignarArea(r1, ciudad1)
+  AsignarArea(r2, ciudad2)
+  AsignarArea(r3, ciudad3)
+  AsignarArea(r4, ciudad4)
+  AsignarArea(r5, ciudad5)
+  AsignarArea(r6, ciudad6)
+  AsignarArea(r7, ciudad7)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 2,11)
+  Iniciar(r3, 3,21)
+  Iniciar(r4, 4,31)
+  Iniciar(r5, 5,41)
+  Iniciar(r6, 6,51)
+  Iniciar(r7, 2,1)
+fin
