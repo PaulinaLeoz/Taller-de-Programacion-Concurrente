@@ -1,0 +1,160 @@
+{Realice un programa en el que un robot fiscalizador controla el acceso de 4 robots recolectores al cuadrante encerrado entre las esquinas (25,25) y (75,75) . Para ello, el robot fiscalizador avisa a un robot recolector aleatorio que puede ingresar al área. El robot que recibe la autorización de acceso calcula una esquina aleatoria dentro del área, limpia dicha esquina de flores y papeles, regresa a su esquina y avisa al robot fiscalizador que ya finalizó. 
+Se realizarán en total 10 accesos al cuadrante entre los 4 robots recolectores. Al finalizar, el robot fiscalizador deberá indicar al robot ganador que se posicione en la esquina (50,50). El robot fiscalizador inicia en la esquina (1,1) y los robots recolectores inician en las esquinas (25,1) (30,1) (35,1) y (40,1) respectivamente.}
+
+programa ejemplo
+procesos
+  proceso iniciar(ES c1: numero; ES c2: numero; ES c3: numero; ES c4: numero)
+  comenzar
+    c1:= 0
+    c2:= 0
+    c3:= 0
+    c4:= 0
+  fin
+ 
+  proceso obtenerMax(E c1: numero; E c2: numero; E c3: numero; E c4: numero; ES maxRobot: numero)
+  variables
+    max: numero
+  comenzar
+    max:= -1
+    si (c1 > max)
+      max:= c1
+      maxRobot:= 1
+    si (c2 > max)
+      max:= c2
+      maxRobot:= 2
+    si (c3 > max)
+      max:= c3
+      maxRobot:= 3
+    si (c4 > max)
+      max:= c4
+      maxRobot:= 4
+  fin
+      
+  proceso avisarRobot(E id: numero; E ok: boolean)
+  comenzar
+    si (id = 1)
+      EnviarMensaje(ok,r1)
+    sino
+      si (id = 2)
+        EnviarMensaje(ok,r2)
+      sino
+        si (id = 3)
+          EnviarMensaje(ok,r3)
+        sino
+          EnviarMensaje(ok,r4)
+  fin
+  
+  proceso limpiarEsquina (ES cant: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      cant:= cant +1
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      cant:= cant +1
+  fin
+  
+  proceso finalizar
+  comenzar
+    EnviarMensaje(F,r1)
+    EnviarMensaje(F,r2)
+    EnviarMensaje(F,r3)
+    EnviarMensaje(F,r4)
+  fin
+  
+  proceso ingresarCuadrante (ES cant: numero)
+  variables
+    iniA, iniC, A, C: numero
+  comenzar
+    iniA:= PosAv
+    iniC:= PosCa
+    Random(A, 25,75)
+    Random(C, 25,75)
+    Pos(A,C)
+    limpiarEsquina(cant)
+    Pos(iniA,iniC)
+  fin
+  
+areas
+  cuadrante: AreaPC (25,25,75,75)
+  ciudad1: AreaP (25,1,25,1)
+  ciudad2: AreaP (30,1,30,1)
+  ciudad3: AreaP (35,1,35,1)
+  ciudad4: AreaP (40,1,40,1)
+  ciudadF: AreaP (1,1,1,1)
+
+robots
+  robot fiscalizador
+  variables
+    c1,c2,c3,c4,elegido,max: numero
+    ok: boolean
+  comenzar
+    iniciar(c1,c2,c3,c4)
+    repetir 10
+      Random(elegido, 1,4)
+      si (elegido = 1)
+        EnviarMensaje(V,r1)
+        EnviarMensaje(c1,r1)
+        RecibirMensaje(c1,r1)
+      sino
+        si (elegido = 2)
+          EnviarMensaje(V,r2)
+          EnviarMensaje(c2,r2)
+          RecibirMensaje(c2,r2)
+        sino 
+          si (elegido = 3)
+            EnviarMensaje(V,r3)
+            EnviarMensaje(c3,r3)
+            RecibirMensaje(c3,r3)
+          sino
+            EnviarMensaje(V,r4)
+            EnviarMensaje(c4,r4)
+            RecibirMensaje(c4,r4)
+    finalizar
+    obtenerMax(c1,c2,c3,c4,max)
+    elegido:= 1 
+    repetir 4
+      si (elegido = max)
+        ok:= V
+      sino
+        ok:= F
+      avisarRobot(elegido,ok)
+      elegido:= elegido+1
+    Informar("Ganador ",max)
+  fin
+      
+  robot recolector
+  variables
+    ok,gane: boolean
+    cant: numero
+  comenzar
+    RecibirMensaje(ok,f)
+    mientras (ok)
+      RecibirMensaje(cant, f)
+      ingresarCuadrante(cant)
+      EnviarMensaje(cant,f)
+      RecibirMensaje(ok,f)
+    RecibirMensaje(gane,f)
+    si (gane)
+      Pos(50,50)
+  fin
+
+variables
+  f: fiscalizador
+  r1,r2,r3,r4: recolector
+comenzar
+  AsignarArea(f, ciudadF)
+  AsignarArea(r1, cuadrante)
+  AsignarArea(r1, ciudad1)
+  AsignarArea(r2, cuadrante)
+  AsignarArea(r2, ciudad2)
+  AsignarArea(r3, cuadrante)
+  AsignarArea(r3, ciudad3)
+  AsignarArea(r4, cuadrante)
+  AsignarArea(r4, ciudad4)
+  Iniciar(f, 1,1)
+  Iniciar(r1, 25,1)
+  Iniciar(r2, 30,1)
+  Iniciar(r3, 35,1)
+  Iniciar(r4, 40,1)
+fin
