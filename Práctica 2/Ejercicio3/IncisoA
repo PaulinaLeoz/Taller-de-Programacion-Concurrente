@@ -4,7 +4,7 @@
 Los robots A1 y B1 deberán realizar las 10 primeras esquinas de su recorrido, y al finalizar avisarán a los robots A2 y B2 respectivamente para que continúen con las siguientes 10 esquinas. El segundo robot de cada equipo debe informar la cantidad de elementos recogidos en las 20 esquinas.
 Inicialice los 4 robots en las esquinas que considere más apropiadas según el trayecto que le corresponde realizar a cada uno.}
 
-programa ejercicio3
+programa ejercicio3_2
 procesos
   proceso juntarFlores(ES cantFlores: numero)
   comenzar
