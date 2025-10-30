@@ -1,0 +1,121 @@
+b. Modifique el programa anterior para que cada equipo repita el recorrido con las siguientes 20 esquinas de sus correspondientes calles.
+programa ejercicio3_2
+procesos
+  proceso juntarFlores(ES cantFlores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      cantFlores:= cantFlores +1
+  fin
+  
+  proceso juntarFloresCalle(ES cantFlores: numero)
+  comenzar
+    repetir 9
+      juntarFlores(cantFlores)
+      mover
+    juntarFlores(cantFlores)
+  fin
+
+  proceso juntarPapeles(ES cantPapeles: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      cantPapeles:= cantPapeles +1
+  fin
+  
+  proceso juntarPapelesCalle(ES cantPapeles: numero)
+  comenzar
+    repetir 9
+      juntarPapeles(cantPapeles)
+      mover
+    juntarPapeles(cantPapeles)
+  fin
+
+areas
+  ciudad1: AreaP (1,1,100,1)
+  ciudad2: AreaP (1,5,100,5)
+
+robots
+  robot robot1
+  variables
+    cantPapeles, ini: numero
+  comenzar
+    derecha
+    ini:= PosAv + 20
+    repetir 4
+      cantPapeles:= 0
+      juntarPapelesCalle(cantPapeles)
+      EnviarMensaje(cantPapeles, A2)
+      Pos(ini,1)
+      ini:= ini+20 
+    cantPapeles:= 0
+    juntarPapelesCalle(cantPapeles)
+    EnviarMensaje(cantPapeles, A2)
+  fin
+  
+  robot robot2
+  variables
+    cantPapeles, ini: numero
+  comenzar
+    derecha
+    ini:= PosAv + 20
+    repetir 4
+      RecibirMensaje(cantPapeles, A1)
+      juntarPapelesCalle(cantPapeles)
+      Informar(cantPapeles)
+      Pos(ini,1)
+      ini:= ini+20
+    RecibirMensaje(cantPapeles, A1)
+    juntarPapelesCalle(cantPapeles)
+    Informar(cantPapeles)
+  fin
+  
+  robot robot3
+  variables
+    cantFlores, ini: numero
+  comenzar
+    derecha
+    ini:= PosAv + 20
+    repetir 4
+      cantFlores:= 0
+      juntarFloresCalle(cantFlores)
+      EnviarMensaje(cantFlores, B2)
+      Pos(ini,5)
+      ini:= ini+20
+    cantFlores:= 0
+    juntarFloresCalle(cantFlores)
+    EnviarMensaje(cantFlores, B2)
+  fin
+  
+  robot robot4
+  variables
+    cantFlores, ini: numero
+  comenzar
+    derecha
+    ini:= PosAv + 20
+    repetir 4
+      RecibirMensaje(cantFlores, B1)
+      juntarFloresCalle(cantFlores)
+      Informar(cantFlores)
+      Pos(ini,5)
+      ini:= ini+20
+    RecibirMensaje(cantFlores, B1)
+    juntarFloresCalle(cantFlores)
+    Informar(cantFlores)
+  fin    
+
+variables
+  A1: robot1
+  A2: robot2
+  B1: robot3
+  B2: robot4
+comenzar
+  AsignarArea(A1, ciudad1)
+  AsignarArea(A2, ciudad1)
+  AsignarArea(B1, ciudad2)
+  AsignarArea(B2, ciudad2)
+  Iniciar(A1, 1,1)
+  Iniciar(A2, 11,1)
+  Iniciar(B1, 1,5)
+  Iniciar(B2, 11,5)  
+fin
