@@ -1,0 +1,85 @@
+TERMINARRRRRRRRRRRRRRRRRRRRRRRRRRRR{Realice un programa con 2 robots recolectores de flores (floreros) y 2 robots recolectores de papeles (papeleros).
+Los floreros comparten área y tienen 5 intentos cada uno para juntar las flores de una esquina, dentro de dicha área, elegida al azar en cada intento. Del mismo modo, los papeleros comparten área y tienen 3 intentos cada uno para juntar los papeles. En cada intento cada robot va a la esquina al azar, junta todos los elementos (flores o papeles según le corresponda) y vuelve a su esquina original. Al finalizar sus intentos cada robot debe acceder a la esquina (10, 10) y depositar los elementos recogidos de a uno.
+- Área de floreros: (1,1) a (5, 10)
+- Área de papeleros: (6, 1) a (10, 9)
+- Esquinas de inicio de floreros: (6,10) y (7,10)
+- Esquinas de inicio de papeleros: (8,10) y (9,10)}
+
+programa ejercicio1
+procesos
+  
+  proceso juntarFlores(ES cant: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      cant:= cant +1
+  fin
+  
+  proceso recolectarFlores(E ca: numero; E av: numero; ES cant: numero)
+  comenzar
+     Pos(av,ca)
+     juntarFlores(cant) 
+  fin
+  
+  proceso juntarPapeles(ES cant: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      cant:= cant +1
+  fin
+  
+  proceso recolectarPapeles(E ca: numero; E av: numero; ES cant: numero)
+  comenzar
+    Pos(av,ca)
+    juntarPapeles(cant)
+  fin
+
+areas
+  areaFloreros: AreaPC (1,1,5,10)
+  areaPapeleros: AreaPC (6,1,10,9)
+
+robots
+  robot floreros
+  variables
+    iniC, iniA, ca, av, cant: numero
+  comenzar
+    cant:= 0
+    iniC:= PosCa
+    iniA:= PosAv
+    Random(ca, 1,10)
+    Random(av, 1,5)
+    BloquearEsquina(av,ca)
+    recolectarFlores(ca,av,cant)
+    Pos(iniA,iniC)
+    LiberarEsquina(av,ca)    
+  fin
+
+  robot papeleros
+    iniC, iniA, ca, av, cant: numero
+  comenzar
+    cant:= 0
+    iniC:= PosCa
+    iniA:= PosAv
+    Random(ca, 1,10)
+    Random(av, 1,5)
+    BloquearEsquina(av,ca)
+    recolectarPapeles(ca,av,cant)
+    Pos(iniA,iniC)
+    LiberarEsquina(av,ca)    
+  fin
+  
+variables
+  r1: floreros
+  r2: floreros
+  r3: papeleros
+  r4: papeleros
+comenzar
+  AsignarArea(r1, areaFloreros)
+  AsignarArea(r2, areaFloreros)
+  AsignarArea(r3, areaPapeleros)
+  AsignarArea(r4, areaPapeleros)
+  Iniciar(r1, 6,10)
+  Iniciar(r2, 7,10)
+  Iniciar(r3, 8,10)
+  Iniciar(r4, 9,10)
+fin
